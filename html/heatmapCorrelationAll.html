@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+    jQuery.noConflict();
+</script>
+<script src="../js/d3.v3.min.js"></script>
+<script src="../js/purl.js"></script>
+<script src="../js/correlationMatrix.js"></script>
+<script src="../data/pearsonCorrelation.PMRA.js"></script>
+<script src="../data/pearsonCorrelation.COSINE.js"></script>
+<script src="../data/pearsonCorrelation.BM25_1.2_0.75.js"></script>
+<script src="../data/pearsonCorrelation.BM25_1.3_0.75.js"></script>
+<script src="../data/pearsonCorrelation.BM25_1.4_0.75.js"></script>
+<script src="../data/pearsonCorrelation.BM25_1.5_0.75.js"></script>
+<script src="../data/pearsonCorrelation.BM25_1.6_0.75.js"></script>
+<script src="../data/pearsonCorrelation.BM25_1.7_0.75.js"></script>
+<script src="../data/pearsonCorrelation.BM25_1.8_0.75.js"></script>
+<script src="../data/pearsonCorrelation.BM25_1.9_0.75.js"></script>
+<script src="../data/pearsonCorrelation.BM25_2.0_0.75.js"></script>
+<script src="../data/pearsonCorrelation.BM25_1.2_1.0.js"></script>
+<script src="../data/pearsonCorrelation.BM25_1.3_1.0.js"></script>
+<script src="../data/pearsonCorrelation.BM25_1.4_1.0.js"></script>
+<script src="../data/pearsonCorrelation.BM25_1.5_1.0.js"></script>
+<script src="../data/pearsonCorrelation.BM25_1.6_1.0.js"></script>
+<script src="../data/pearsonCorrelation.BM25_1.7_1.0.js"></script>
+<script src="../data/pearsonCorrelation.BM25_1.8_1.0.js"></script>
+<script src="../data/pearsonCorrelation.BM25_1.9_1.0.js"></script>
+<script src="../data/pearsonCorrelation.BM25_2.0_1.0.js"></script>
+<!--script src="../data/pearsonCorrelation.BM25_1.2_0.75.TA.js"></script>
+<script src="../data/pearsonCorrelation.BM25_1.9_1.0.TA.js"></script>
+<script src="../data/pearsonCorrelation.BM25_1.2_1.0.TA.js"></script>
+<script src="../data/pearsonCorrelation.BM25_1.9_1.0.TA.js"></script-->
+<script src="../data/PMC_pearsonCorrelation.BM25_2.0_0.75.js"></script>
+<script src="../data/PMC_pearsonCorrelation.COSINE.js"></script>
+<script src="../data/PMC_pearsonCorrelation.PMRA.js"></script>
+<script src="../data/pearson.js"></script>
+<script>
+	window.onload = function() {		
+		var params = jQuery.url(location.href).param();
+		var set = "pmra"; //baseline, pmra
+		if (params.set) {
+			set = params.set;				
+			data = window["pearson_" + set];
+			try {
+				data["algorithms"];
+			} catch(exception) {
+				data = pearson_pmra;
+			}
+		} else {
+			data = pearson_pmra;
+		}
+		drawCorrelationMatrix("target", data);
+	};
+</script>
+</head>
+<body>
+	<div id="target" style="margin-left: 10px"></div>
+</body>
+</html>
+
