@@ -18,7 +18,7 @@ The correlation used here follows the <a href="http://en.wikipedia.org/wiki/Pear
 
 - Global correlation.
 
-5We have a general correlation matrix that shows how PMRA-annotations, BM25, and Cosine correlates to PMRA-stems. Such correlation matrix can be visualized <a href="http://ljgarcia.github.io/semsim.benchmark/html/heatmapCorrelationAll.html">here</a>.
+We have a general correlation matrix that shows how PMRA-annotations, BM25, and Cosine correlates to PMRA-stems. Such correlation matrix can be visualized <a href="http://ljgarcia.github.io/semsim.benchmark/html/heatmapCorrelationAll.html">here</a>.
 
 - Correlation by TREC topics
 
