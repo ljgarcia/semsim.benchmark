@@ -5,7 +5,7 @@ PubMed, a repository for scientific publications, offers the related articles fe
 
 How related articles can be calculated when working with semantic annotations? Is there any difference between using only title-and-abstract versus full-text? Those are the questions we are interested in.
 
-we have benchmarked three similarity algorithms --PMRA, BM25, and Cosine, in order to determine which one works best with semantic annotations on full-text. We used the <a href="http://trec.nist.gov/pubs/trec14/t14_proceedings.html">TREC-2005 Genomics Track collection</a> to carry on our experiments. We have performed analyses based on Pearson Correlation, precision & recall, and dispersion. TREC-2005 comprises 34633 articles organized in 50 topics. Only 4585 are categorized as relevant or partially relevant to at least one of the 50 topics. We are working with 4240 of those 4585.
+We have benchmarked three similarity algorithms --PMRA, BM25, and Cosine, in order to determine which one works best with semantic annotations on full-text. We used the <a href="http://trec.nist.gov/pubs/trec14/t14_proceedings.html">TREC-2005 Genomics Track collection</a> to carry on our experiments. We have performed analyses based on Pearson Correlation, precision & recall, and dispersion. TREC-2005 comprises 34633 articles organized in 50 topics. Only 4585 are categorized as relevant or partially relevant to at least one of the 50 topics. We are working with 4240 of those 4585.
 
 PMRA-stems, PMRA applied to stems in text-and-abstract, is used as a baseline. PMRA, BM25, and Cosine are applied to annotations in text-and-abstract.  The more red, the higher the correlation while the more blue the lower the correlation.
 
@@ -22,7 +22,7 @@ The correlation used here follows the <a href="http://en.wikipedia.org/wiki/Pear
 
 - Correlation by TREC topics
 
-We also have correlation by TREC topics. TREC topics are numbered from 100 to 149, excluding 135. Such correlations can be visualized <a href="http://ljgarcia.github.io/semsim.benchmark/html/heatmapCorrelationTopic.html">here</a>. By default topic 100 is shown, in order to change topic add **?topic=101** or any other valid topic number. For instance, for topic 101 the link would look like <a href="http://ljgarcia.github.io/semsim.benchmark/html/heatmapCorrelationTopic.html?topic=101">http://ljgarcia.github.io/semsim.benchmark/html/heatmapCorrelationTopic.html?topic=101</a>.
+We also have correlation by TREC topics. TREC topics are numbered from 100 to 149, excluding 135. Such correlations can be visualized <a href="http://ljgarcia.github.io/semsim.benchmark/html/heatmapCorrelationTopic.html?topic=100">here</a>. By default topic 100 is shown, in order to change the topic modify the parameter **?topic=#** to any valid topic number (100 to 149 except 135). For instance, for topic 101 the link would look like <a href="http://ljgarcia.github.io/semsim.benchmark/html/heatmapCorrelationTopic.html?topic=101">http://ljgarcia.github.io/semsim.benchmark/html/heatmapCorrelationTopic.html?topic=101</a>.
 
 Dispersion analyses
 ----------
