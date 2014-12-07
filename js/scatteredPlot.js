@@ -1,7 +1,9 @@
 var lst = ["7576301", "8593205", "8924224", "9015311", "9245791", "9443089", "9569056", "9584145", "9649126", "9681800", "9732293", "9832560", "10330400", "10352017", "10491393", "10525535", "10662776", "10811821", "11056682", "11086000", "11157977", "11157977", "11285283", "11381093", "11401727", "11532215", "11564752", "11591730", "11690545", "11707154", "11737944", "11790258", "11870542", "11879553", "11983060", "12049663", "12058019", "12095422", "12135983", "12147673", "12175426", "12184807", "12184811", "12225587", "12354330", "12429061", "12429067", "12537560", "12538638", "12556960", "12615908", "12659637", "12682085", "12803655", "12823867", "12930545", "12950995", "12962547", "12967349", "14517204", "14557250", "14562023", "14581449"];
 var selectedIndex = 0;
 function createList (target, similarities_csv) {
-	var select = d3.select("div#" + target).append("select");	
+	var wrapper = d3.select("div#" + target).append("div");
+	wrapper.append("span").text("Please select the PubMed ID you are interested in: ");
+	var select = wrapper.append("span").append("select");
 	var options = select.selectAll("option")
 		.data(lst).enter()
 		.append("option")
@@ -13,6 +15,15 @@ function createList (target, similarities_csv) {
 			drawScatteredPlot('plot', lst[this.selectedIndex], similarities_csv);
 		}		
 	});
+	d3.select("div#" + target)
+		.append("div")
+		.text("Similarities for all articles regarding the selected one will be displayed. Articles are represented by circles.")
+	d3.select("div#" + target)
+		.append("div")
+		.text("Mouse-over the articles, i.e., circles, to see the similarity values based on annotations, the first value is based on 	title-and-abstract, the second one on full-text");
+	d3.select("div#" + target)
+		.append("div")
+		.text("PMRA is the algorithm used by default. For Cosine or BM25, please add the parameter ?set=cosine or ?set=bm25 to the URL.");
 }
 function drawScatteredPlot (target, pmid, similarities_csv) {
 	d3.select("svg").remove(); //so we can plot all over again

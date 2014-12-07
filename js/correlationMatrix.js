@@ -13,6 +13,12 @@ function drawCorrelationMatrix(target, data, topic) {
       right: 5,
       bottom: 70
     };
+	if (topic != undefined) {
+		topicNumber = parseInt(topic);
+		if ((topicNumber === 135) || (topicNumber < 100) || (topicNumber > 149)){
+			topic = "100";	
+		}	
+	}
     totalHeight = height + pad.top + pad.bottom;
     totalWidth = (width + pad.left + pad.right) * 2;
     svg = d3.select("div#" + target).append("svg").attr("height", totalHeight).attr("width", totalWidth);
@@ -96,16 +102,33 @@ function drawCorrelationMatrix(target, data, topic) {
     corrplot.append("rect")
         .attr("height", height).attr("width", width).attr("fill", "none")
         .attr("stroke", "black").attr("stroke-width", 1).attr("pointer-events", "none");
-    var title = "Correlation matrix ";
+    var title = "Pearson Correlation matrix ";
     if (data["title"] != undefined) {
+		console.log(data["title"]);
     	title = title + data["title"];
     }
     if (topic != undefined) {
-        title = mainTitle + " (topic "+ topic + ")";
+		console.log(mainTitle);
+        title = "Pearson Correlation matrix " + mainTitle + " (topic "+ topic + ")";
     }
-    corrplot.append("text").text(title)
+    var textWrapper = corrplot.append("text").text(null);
+	textWrapper.append("tspan").text(title)
         .attr("id", "corrtitle").attr("x", width / 2)
         .attr("y", -pad.top / 1.5).attr("dominant-baseline", "middle")
+        .attr("text-anchor", "middle")
+	textWrapper.append("tspan").text("The more red the higher the correlation, the more blue the lower the correlation")
+		.attr("id", "corrtitle").attr("x", width / 2)
+        .attr("y", -pad.top / 1.5 + 650).attr("dominant-baseline", "middle")
         .attr("text-anchor", "middle");
+	textWrapper.append("tspan").text("On mouse-over you will see the correlation value.")
+		.attr("id", "corrtitle").attr("x", width / 2)
+        .attr("y", -pad.top / 1.5 + 668).attr("dominant-baseline", "middle")
+        .attr("text-anchor", "middle");
+	if (topic != undefined) {
+		textWrapper.append("tspan").text("Change the parameter ?topic=<any number between 100 and 149 except 135> to see other topic.")
+		.attr("id", "corrtitle").attr("x", width / 2)
+        .attr("y", -pad.top / 1.5 + 686).attr("dominant-baseline", "middle")
+        .attr("text-anchor", "middle");
+	}
     d3.select("div#legend").style("opacity", 1);
 };
