@@ -37,35 +37,56 @@
         </div>
         <article class="markdown-body">
           <h1>
-<a name="semantic-similarity-benchmark-for-algorithms-applied-to-pmc-oa" class="anchor" href="#semantic-similarity-benchmark-for-algorithms-applied-to-pmc-oa"><span class="octicon octicon-link"></span></a>Semantic similarity: Benchmark for algorithms applied to PMC-OA</h1>
+<a id="semantic-similarity-a-benchmark-for-algorithms-applied-to-pmc-oa" class="anchor" href="#semantic-similarity-a-benchmark-for-algorithms-applied-to-pmc-oa" aria-hidden="true"><span class="octicon octicon-link"></span></a>Semantic similarity: A benchmark for algorithms applied to PMC-OA</h1>
 
-<p>This repository contains some correlation matrixes, which are visualized as a heatmap. It also contains scattered matrixes, which are visualized as scatterd plots. Visualization is done with D3.</p>
+<p>PubMed, a repository for scientific publications, offers the related articles feature. Once the user is reading an article, on the right side the most related articles will be displayed. Relationship here is measured with the <a href="http://www.biomedcentral.com/1471-2105/8/423">PubMed Related Article (PMRA) algorithm</a>. PMRA uses word stems as well as Medical Subject Headings (MeSH) terms in order to rank the related articles.</p>
 
-<p>All of the algortihms used here are for academic purposes. They do not intend to be maintainable or scalable.</p>
+<p>How related articles can be calculated when working with semantic annotations? Is there any difference between using only title-and-abstract versus full-text? Those are the questions we are interested in.</p>
 
-<p>For more information on PMC-OA go to its <a href="http://www.ncbi.nlm.nih.gov/pmc/tools/openftlist/">website</a>.</p>
+<p>We have benchmarked three similarity algorithms --PMRA, BM25, and Cosine, in order to determine which one works best with semantic annotations on full-text. We used the <a href="http://trec.nist.gov/pubs/trec14/t14_proceedings.html">TREC-2005 Genomics Track collection</a> to carry on our experiments. We have performed analyses based on Pearson Correlation, precision &amp; recall, and dispersion. TREC-2005 comprises 34633 articles organized in 50 topics. Only 4585 are categorized as relevant or partially relevant to at least one of the 50 topics. We are working with 4240 of those 4585.</p>
 
-<h2>
-<a name="correlation" class="anchor" href="#correlation"><span class="octicon octicon-link"></span></a>Correlation</h2>
+<p>PMRA-stems, PMRA applied to stems in text-and-abstract, is used as a baseline. PMRA, BM25, and Cosine are applied to annotations in text-and-abstract.  The more red, the higher the correlation while the more blue the lower the correlation.</p>
 
-<p>Correlation follows the <a href="http://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient">Pearson algorithm</a>. When visualized, the more blue the less correalted; the more red, the more correlated.</p>
-
-<p>We have a general correlation matrix that shows how different similarity algorithms correlates to <a href="http://www.biomedcentral.com/1471-2105/8/423">PMRA applied on stems</a>. Such correlation can be visualized <a href="http://ljgarcia.github.io/semsim.benchmark/html/heatmapCorrelationAll.html">here</a>.</p>
-
-<p>We also have correlation by topics. We use topics from <a href="http://trec.nist.gov/pubs/trec14/t14_proceedings.html">TREC-2005 Genomic Track</a>, those are numbered from 100 to 149, excluding 135. Such correlations can be visualized <a href="http://ljgarcia.github.io/semsim.benchmark/html/heatmapCorrelationTopic.html">here</a>. By default topic 100 is shown, in order to change topic add ?topic=101 or any other valid topic number. For instance, for topic 101 the link would look like <a href="http://ljgarcia.github.io/semsim.benchmark/html/heatmapCorrelationTopic.html?topic=101"></a><a href="http://ljgarcia.github.io/semsim.benchmark/html/heatmapCorrelationTopic.html?topic=101">http://ljgarcia.github.io/semsim.benchmark/html/heatmapCorrelationTopic.html?topic=101</a>.</p>
+<p>All of the algorithms used here are for academic purposes. They do not intend to be maintainable or scalable.</p>
 
 <h2>
-<a name="scattered-plots" class="anchor" href="#scattered-plots"><span class="octicon octicon-link"></span></a>Scattered plots</h2>
+<a id="correlation-analyses" class="anchor" href="#correlation-analyses" aria-hidden="true"><span class="octicon octicon-link"></span></a>Correlation analyses</h2>
 
-<p>Semantic similarity depends on the terms, i.e., words or expressions, contained in the articles under comparison. Thus, similarity changes if only terms in the title and abstract are used, versus terms found taking into account the whole content. </p>
+<p>The correlation used here follows the <a href="http://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient">Pearson algorithm</a>. For each similarity metric, i.e., PMRA-annotations, BM25 with variations on its parameters, and Cosine, we measure the correlation against PMRA-stems. Correlations are stored as matrixes and visualized as heatmaps. When visualized, the more blue the less correlated; the more red, the more correlated.</p>
 
-<p>Scattered plots show how similarity varies under the conditions mentioned above. The scattered data includes 62 PMC-OA articles for three different algorithms: PMRA, Cosine, and BM25 (k=2, b=0.75). PMRA is visualized by default <a href="http://ljgarcia.github.io/semsim.benchmark/html/taVsFullContent.html">here</a>. For <a href="http://ljgarcia.github.io/semsim.benchmark/html/taVsFullContent.html?set=cosine">cosine</a> use the parameter ?set=cosine, and for <a href="http://ljgarcia.github.io/semsim.benchmark/html/taVsFullContent.html?set=bm25">BM25</a> use the parameter ?set=bm25. Articles can be selected on the list box; they are identified by their PubMed ID.</p>
+<ul>
+<li>Global correlation.</li>
+</ul>
+
+<p>5We have a general correlation matrix that shows how PMRA-annotations, BM25, and Cosine correlates to PMRA-stems. Such correlation matrix can be visualized <a href="http://ljgarcia.github.io/semsim.benchmark/html/heatmapCorrelationAll.html">here</a>.</p>
+
+<ul>
+<li>Correlation by TREC topics</li>
+</ul>
+
+<p>We also have correlation by TREC topics. TREC topics are numbered from 100 to 149, excluding 135. Such correlations can be visualized <a href="http://ljgarcia.github.io/semsim.benchmark/html/heatmapCorrelationTopic.html?topic=100">here</a>. By default topic 100 is shown, in order to change the topic modify the parameter <strong>?topic=#</strong> to any valid topic number (100 to 149 except 135). For instance, for topic 101 the link would look like <a href="http://ljgarcia.github.io/semsim.benchmark/html/heatmapCorrelationTopic.html?topic=101"></a><a href="http://ljgarcia.github.io/semsim.benchmark/html/heatmapCorrelationTopic.html?topic=101">http://ljgarcia.github.io/semsim.benchmark/html/heatmapCorrelationTopic.html?topic=101</a>.</p>
+
+<h2>
+<a id="dispersion-analyses" class="anchor" href="#dispersion-analyses" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dispersion analyses</h2>
+
+<p>Semantic similarity depends on the terms, i.e., words or expressions, contained in the articles under comparison. Similarity scores change whenever the considered terms do. Thus, similarity scores are different for title-and-abstract and full-text. </p>
+
+<p>Scattered plots show how similarity varies under the conditions mentioned above. The scattered data includes 62 PMC-OA articles for three different algorithms: PMRA-annotations, Cosine, and BM25 (k=2, b=0.75). </p>
+
+<ul>
+<li>PMRA is visualized by default <a href="http://ljgarcia.github.io/semsim.benchmark/html/taVsFullContent.html">here</a>. </li>
+<li>For <a href="http://ljgarcia.github.io/semsim.benchmark/html/taVsFullContent.html?set=cosine">cosine</a> use the parameter 
+<strong>?set=cosine</strong>, </li>
+<li>For <a href="http://ljgarcia.github.io/semsim.benchmark/html/taVsFullContent.html?set=bm25">BM25</a> use the parameter <strong>?set=bm25</strong>. </li>
+</ul>
+
+<p>The article for which an interested is know, e.g., the article is being read by a user, can be selected on the drop-down list containing PubMed identifiers. Similarities for all the 62 articles regarding the selected one will be then displayed.</p>
         </article>
       </div>
     </div>
     <footer>
       <div class="owner">
-      <p><a href="https://github.com/ljgarcia" class="avatar"><img src="https://avatars0.githubusercontent.com/u/5427252?v=2&amp;s=60" width="48" height="48"></a> <a href="https://github.com/ljgarcia">ljgarcia</a> maintains <a href="https://github.com/ljgarcia/semsim.benchmark">Semantic Similarity Benchmark</a></p>
+      <p><a href="https://github.com/ljgarcia" class="avatar"><img src="https://avatars1.githubusercontent.com/u/5427252?v=3&amp;s=60" width="48" height="48"></a> <a href="https://github.com/ljgarcia">ljgarcia</a> maintains <a href="https://github.com/ljgarcia/semsim.benchmark">Semantic Similarity Benchmark</a></p>
 
 
       </div>
