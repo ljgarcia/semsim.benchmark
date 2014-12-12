@@ -1,8 +1,29 @@
 var lst = ["7576301", "8593205", "8924224", "9015311", "9245791", "9443089", "9569056", "9584145", "9649126", "9681800", "9732293", "9832560", "10330400", "10352017", "10491393", "10525535", "10662776", "10811821", "11056682", "11086000", "11157977", "11157977", "11285283", "11381093", "11401727", "11532215", "11564752", "11591730", "11690545", "11707154", "11737944", "11790258", "11870542", "11879553", "11983060", "12049663", "12058019", "12095422", "12135983", "12147673", "12175426", "12184807", "12184811", "12225587", "12354330", "12429061", "12429067", "12537560", "12538638", "12556960", "12615908", "12659637", "12682085", "12803655", "12823867", "12930545", "12950995", "12962547", "12967349", "14517204", "14557250", "14562023", "14581449"];
-var selectedIndex = 0;
+
+var topics = [
+	{"topic": "100", "pmids": [12175426]}
+	, {"topic": "103", "pmids": [11737944]}
+	, {"topic": "106", "pmids": [14581449]}
+	, {"topic": "107", "pmids": [11532215, 11690545, 11790258, 11983060, 12049663, 12095422, 12184807, 12184811, 12225587, 12354330, 12429061, 12537560, 12659637, 12803655, 12823867, 12930545, 12950995, 12962547, 12967349]}
+	, {"topic": "108", "pmids": [9245791, 10352017, 11381093, 11401727, 12615908, 14517204]}
+	, {"topic": "111", "pmids": [9681800]}
+	, {"topic": "114", "pmids": [9015311, 9649126, 11707154]}
+	, {"topic": "119", "pmids": [11056682, 12556960, 14562023]}
+	, {"topic": "120", "pmids": [7576301, 8593205, 8924224, 9443089, 9569056]}
+	, {"topic": "121", "pmids": [9832560, 11879553]}
+	, {"topic": "122", "pmids": [10491393, 10662776, 11157977, 11564752, 12058019]}
+	, {"topic": "123", "pmids": [11086000, 12538638]}
+	, {"topic": "124", "pmids": [11285283]}
+	, {"topic": "126", "pmids": [9584145, 11591730, 11870542, 12135983]}
+	, {"topic": "132", "pmids": [10330400]}
+	, {"topic": "139", "pmids": [9732293, 12682085]}
+	, {"topic": "141", "pmids": [14557250]}
+	, {"topic": "146", "pmids": [10525535, 10811821, 12147673, 12429067]}
+];
+
 function createList (target, similarities_csv) {
 	var wrapper = d3.select("div#" + target).append("div");
-	wrapper.append("span").text("Please select the PubMed ID you are interested in: ");
+	wrapper.append("span").style("font-size", "16px").text("Please select the PubMed ID you are interested in: ");
 	var select = wrapper.append("span").append("select");
 	var options = select.selectAll("option")
 		.data(lst).enter()
@@ -12,10 +33,10 @@ function createList (target, similarities_csv) {
 	select.on("click", function() {
 		if (selectedIndex != this.selectedIndex) {// so on the first change it will not redraw
 			selectedIndex = this.selectedIndex;
-			drawScatteredPlot('plot', lst[this.selectedIndex], similarities_csv);
+			drawScatteredPlot('plot', lst[this.selectedIndex], similarities_csv, selectedOption);
 		}		
 	});
-	d3.select("div#" + target)
+	/*d3.select("div#" + target)
 		.append("div")
 		.text("Similarities for all articles regarding the selected one will be displayed. Articles are represented by circles.")
 	d3.select("div#" + target)
@@ -24,8 +45,36 @@ function createList (target, similarities_csv) {
 	d3.select("div#" + target)
 		.append("div")
 		.text("PMRA is the algorithm used by default. For Cosine or BM25, please add the parameter ?set=cosine or ?set=bm25 to the URL.");
+		*/
 }
-function drawScatteredPlot (target, pmid, similarities_csv) {
+
+function inTopic(d, myTopic) {
+	for (var i = 0; i < myTopic.pmids.length; i++) {
+		if (myTopic.pmids[i] == d.PMID) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function drawScatteredPlot (target, pmid, similarities_csv, whichTopic) {
+	//get the topic for the selected article
+	var myTopic = undefined;
+	for (var i = 0; i < topics.length; i++) {
+		for (var j = 0; j < topics[i].pmids.length; j++) {
+			if (topics[i].pmids[j] == pmid) {
+				myTopic = topics[i];
+				break;
+			}
+		}	
+		if (myTopic != undefined) {
+			break;
+		}	
+	}
+	
+	//get the topic display option
+	
+	
 	d3.select("svg").remove(); //so we can plot all over again
 	var margin = {top: 30, right: 30, bottom: 30, left: 30},
 	    width = 500- margin.left - margin.right,
@@ -105,14 +154,21 @@ function drawScatteredPlot (target, pmid, similarities_csv) {
 	      .text("Annotations on Title&Abstract (" + pmid + ")");
 	
 	  // draw dots
-	  svg.selectAll(".dot")
-	      .data(data)
-	    .enter().append("circle")
+	  var shapes = svg.selectAll(".dot")
+	      .data(data).enter();
+	  //circles are not in topic  
+	  if ((whichTopic === "both") || (whichTopic === "other")) {
+	  	shapes.append("circle")
+	  	.filter(function(d) {
+	  		return !inTopic(d, myTopic);
+	  	})
 	      .attr("class", "dot")
 	      .attr("r", 3.5)
 	      .attr("cx", xMap)
 	      .attr("cy", yMap)
-	      .style("fill", function(d,i) { return color(cValue(d,i));}) 
+	      .style("fill", function(d,i) {
+	      	return color(cValue(d,i));
+	      }) 
 	      .on("mouseover", function(d) {
 	          tooltip.transition()
 	               .duration(200)
@@ -127,6 +183,38 @@ function drawScatteredPlot (target, pmid, similarities_csv) {
 	               .duration(500)
 	               .style("opacity", 0);
 	      });
+	  }
+	  
+	 //rectangles are in topic 
+	 if ((whichTopic === "both") || (whichTopic === "selected")) {    
+		 shapes.append("rect")
+		  	.filter(function(d) {
+		  		return inTopic(d, myTopic);
+		  	})
+		      .attr("class", "dot")
+		      .attr("width", 7)
+		      .attr("height", 7)
+		      //.attr("r", 3.5)
+		      .attr("x", xMap)
+		      .attr("y", yMap)
+		      .style("fill", function(d,i) {
+		      	return color(cValue(d,i));
+		      }) 
+		      .on("mouseover", function(d) {
+		          tooltip.transition()
+		               .duration(200)
+		               .style("opacity", .9);
+		          tooltip.html("PMID:" + d["PMID"] + "<br/> (" + xValue(d) 
+			        + ", " + yValue(d) + ")")
+		               .style("left", (d3.event.pageX + 5) + "px")
+		               .style("top", (d3.event.pageY - 28) + "px");
+		      })
+		      .on("mouseout", function(d) {
+		          tooltip.transition()
+		               .duration(500)
+		               .style("opacity", 0);
+		      });
+	  }
 	
 	  // draw legend
 	  /*

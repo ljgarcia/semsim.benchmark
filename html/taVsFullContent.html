@@ -35,9 +35,14 @@ body {
 }
 </style>
 <script>
-	window.onload = function() {		
-		var params = jQuery.url(location.href).param();
-		var similarities_csv = "similarities.PMRA.FC-TA.csv";
+	var similarities_csv = "similarities.PMRA.FC-TA.csv";
+	var selectedIndex = 0;
+	var selectedOption = "both";
+	window.onload = function() {	
+		var radios = document.getElementsByName('whichTopic');
+		radios[0].checked = true;
+			
+		var params = jQuery.url(location.href).param();		
 		if (params.set) {
 			set = params.set;
 			if (set === "bm25") {
@@ -51,7 +56,7 @@ body {
 			similarities_csv = "similarities.PMRA.FC-TA.csv";
 		}
 		createList('pmidList', similarities_csv); 
-		drawScatteredPlot('plot', lst[0], similarities_csv);
+		drawScatteredPlot('plot', lst[0], similarities_csv, "both");
 	};
 </script>
 </head>
@@ -59,6 +64,22 @@ body {
 <body>
 	<div id="pmidList">
 
+	</div>
+	<div style="font-size: 13px">
+		<p>
+		Similarities for all articles regarding the selected one will be displayed. Articles are represented by circles.
+		<br/>
+		Mouse-over the articles, i.e., circles, to see the similarity values based on annotations, the first value is based on title-and-abstract, the second one on full-text
+		<br/>
+		PMRA is the algorithm used by default. For Cosine or BM25, please add the parameter ?set=cosine or ?set=bm25 to the URL.
+		<br/>
+		</p>
+	</div>
+	<div id="topicDiv">
+		<p style="font-size: 13px">You can select what articles are displayed based on the topic for the selected PMID</p>
+		<input type="radio" name="whichTopic" value="both" checked onchange="selectedOption = 'both'; drawScatteredPlot('plot', lst[selectedIndex], similarities_csv, 'both');">All topics<br>
+		<input type="radio" name="whichTopic" value="selected" onchange="selectedOption = 'selected'; drawScatteredPlot('plot', lst[selectedIndex], similarities_csv, 'selected');">Topic for selected PMID<br>
+		<input type="radio" name="whichTopic" value="other" onchange="selectedOption = 'other'; drawScatteredPlot('plot', lst[selectedIndex], similarities_csv, 'other');">Other topics<br>
 	</div>
 	<div id="plot">
 		
