@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <head>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script type="text/javascript">
-	    jQuery.noConflict();
-	</script>
+	<!--Original code for box-plot at http://bl.ocks.org/jensgrubert/7789216-->
 	<script src="http://d3js.org/d3.v3.min.js"></script>
 	<script src="d3.v3.min.js"></script>
 	<script src="box.js"></script>
-	<script src="../js/purl.js"></script>
 	
 	<style>
 		body {
@@ -56,21 +52,8 @@
 	</style>
 	
 	<script>
-		window.onload = function() {	
-			var params = jQuery.url(location.href).param();
+		window.onload = function() {
 			var dataFile = "data.csv";
-			if (params.set) {
-				set = params.set;
-				if (set === "mean") {
-					dataFile = "mean.csv";
-				} else if (set === "median") {
-					dataFile = "median.csv";
-				} else {
-					dataFile = "stddev.csv";	
-				} 
-			} else {
-				dataFile = "data.csv";
-			}
 			
 			var labels = true; // show the text labels beside individual boxplots?
 			
