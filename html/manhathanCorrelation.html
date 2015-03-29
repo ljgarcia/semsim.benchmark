@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+	<style>
+		body {
+			font: 11px sans-serif;
+		}
+
+		.axis path, .axis line {
+			fill: none;
+			stroke: #000;
+			shape-rendering: crispEdges;
+		}
+		
+		.tooltip {
+		  width: 300px;
+		  height: 20px;
+		  margin-left: auto ;
+		  margin-right: auto ;
+		  padding-top: 4px;
+		  background-color: black;
+		  opacity: 0.7;
+		  color: white;
+		  text-align: center;
+		}
+		
+		.topic {
+			font: 13px sans-serif;
+			font-weight: bold;
+		}
+		
+		.dot {
+			stroke: none;
+			opacity: 0.7;
+		}
+		.color1 {
+			fill: #1b9e77;			
+		}
+		.color2 {
+			fill: #d95f02;
+		}
+		.color3 {
+			fill: #58539D;
+		}
+		.color4 {
+			fill: #645FAB;
+		}
+		.color5 {
+			fill: #746FB3;
+		}
+		.color6 {
+			fill: #8480BC;
+		}
+		.color7 {
+			fill: #9491C5;
+		}
+		.color8 {
+			fill: #A4A1CE;
+		}
+		.color9 {
+			fill: #B5B2D7;
+		}
+		.color10 {
+			fill: #C5C2E0;
+		}
+		.color11 {
+			fill: #D5D3E9;
+		}
+		.color12 {
+			fill: #7D539D;
+		}
+		.color13 {
+			fill: #8A5FAB;
+		}
+		.color14 {
+			fill: #966FB3;
+		}
+		.color15 {
+			fill: #A280BC;
+		}
+		.color16 {
+			fill: #AE91C5;
+		}
+		.color17 {
+			fill: #BAA1CE;
+		}
+		.color18 {
+			fill: #C6B2D7;
+		}
+		.color19 {
+			fill: #D2C2E0;
+		}
+		.color20 {
+			fill: #DFD3E9;
+		}
+
+
+	</style>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		jQuery.noConflict();
+	</script>
+	<script src="../js/d3.v3.min.js"></script>
+	<script src="../js/purl.js"></script>
+	<script src="../data/pearsonCorrelation.PMRA.js"></script>
+	<script src="../data/pearsonCorrelation.COSINE.js"></script>
+	<script src="../data/pearsonCorrelation.BM25_1.2_0.75.js"></script>
+	<script src="../data/pearsonCorrelation.BM25_1.3_0.75.js"></script>
+	<script src="../data/pearsonCorrelation.BM25_1.4_0.75.js"></script>
+	<script src="../data/pearsonCorrelation.BM25_1.5_0.75.js"></script>
+	<script src="../data/pearsonCorrelation.BM25_1.6_0.75.js"></script>
+	<script src="../data/pearsonCorrelation.BM25_1.7_0.75.js"></script>
+	<script src="../data/pearsonCorrelation.BM25_1.8_0.75.js"></script>
+	<script src="../data/pearsonCorrelation.BM25_1.9_0.75.js"></script>
+	<script src="../data/pearsonCorrelation.BM25_2.0_0.75.js"></script>
+	<script src="../data/pearsonCorrelation.BM25_1.2_1.0.js"></script>
+	<script src="../data/pearsonCorrelation.BM25_1.3_1.0.js"></script>
+	<script src="../data/pearsonCorrelation.BM25_1.4_1.0.js"></script>
+	<script src="../data/pearsonCorrelation.BM25_1.5_1.0.js"></script>
+	<script src="../data/pearsonCorrelation.BM25_1.6_1.0.js"></script>
+	<script src="../data/pearsonCorrelation.BM25_1.7_1.0.js"></script>
+	<script src="../data/pearsonCorrelation.BM25_1.8_1.0.js"></script>
+	<script src="../data/pearsonCorrelation.BM25_1.9_1.0.js"></script>
+	<script src="../data/pearsonCorrelation.BM25_2.0_1.0.js"></script>
+	<script src="../data/pearson.js"></script>
+	
+	<script src="../data/pearsonCorrelationTopic.PMRA.js"></script>
+	<script src="../data/pearsonCorrelationTopic.COSINE.js"></script>
+	<script src="../data/pearsonCorrelationTopic.BM25_1.2_0.75.js"></script>
+	<script src="../data/pearsonCorrelationTopic.BM25_1.3_0.75.js"></script>
+	<script src="../data/pearsonCorrelationTopic.BM25_1.4_0.75.js"></script>
+	<script src="../data/pearsonCorrelationTopic.BM25_1.5_0.75.js"></script>
+	<script src="../data/pearsonCorrelationTopic.BM25_1.6_0.75.js"></script>
+	<script src="../data/pearsonCorrelationTopic.BM25_1.7_0.75.js"></script>
+	<script src="../data/pearsonCorrelationTopic.BM25_1.8_0.75.js"></script>
+	<script src="../data/pearsonCorrelationTopic.BM25_1.9_0.75.js"></script>
+	<script src="../data/pearsonCorrelationTopic.BM25_2.0_0.75.js"></script>
+	<script src="../data/pearsonCorrelationTopic.BM25_1.2_1.0.js"></script>
+	<script src="../data/pearsonCorrelationTopic.BM25_1.3_1.0.js"></script>
+	<script src="../data/pearsonCorrelationTopic.BM25_1.4_1.0.js"></script>
+	<script src="../data/pearsonCorrelationTopic.BM25_1.5_1.0.js"></script>
+	<script src="../data/pearsonCorrelationTopic.BM25_1.6_1.0.js"></script>
+	<script src="../data/pearsonCorrelationTopic.BM25_1.7_1.0.js"></script>
+	<script src="../data/pearsonCorrelationTopic.BM25_1.8_1.0.js"></script>
+	<script src="../data/pearsonCorrelationTopic.BM25_1.9_1.0.js"></script>
+	<script src="../data/pearsonCorrelationTopic.BM25_2.0_1.0.js"></script>
+	<script src="../data/pearsonTopic.js"></script>
+
+	<script>
+		window.onload = function() {
+			var pmids = pearson_pmra.pmid;
+			var data = pearson_pmra;
+			var topicDiv = d3.select("#topic");
+			var params = jQuery.url(location.href).param();		
+			if (params.topic) {
+				var topic = +params.topic;
+				if ((100 <= topic) && (topic <= 149) && (topic != 135)) {
+					pmids = window["pmids_" + topic];
+					data = window["pearson_" + topic];
+					topicDiv.text("Topic: " + allTopics[topic]);
+				} else {
+					pmids = pearson_pmra.pmid;
+					data = pearson_pmra;
+					topicDiv.text("Topic: all");
+				} 
+			} else {
+				pmids = pearson_pmra.pmid;
+				data = pearson_pmra;
+				topicDiv.text("Topic: all");
+			}
+			//var pmids = pearson_pmra.pmid;
+			//var data = pearson_pmra;
+			
+			//var pmids = pmids_117;
+			//var data = pearson_117;
+			
+			//var pmids = pmids_108;
+			//var data = pearson_108;
+			
+			//var pmids = pmids_120;
+			//var data = pearson_120;
+			
+			// add the tooltip area to the webpage
+			var tooltip = d3.select("#tooltip");
+
+			var 
+				margin = {
+					top : 20,
+					right : 20,
+					bottom : 30,
+					left : 40
+				}
+				, width = 960 - margin.left - margin.right
+				, totalWidth = 1100 - margin.left - margin.right
+				, height = 500 - margin.top - margin.bottom
+				, gapLegendShape = 110
+				, gapLegendText = 20
+				, square = 10
+			;
+
+			var x = d3.scale.linear().domain([0, pmids.length]).range([0, width]);
+			var y = d3.scale.linear().domain([-1.0, 1-0]).range([height, 0]);			
+			var xAxis = d3.svg.axis().scale(x).orient("bottom").tickValues([]);
+			var yAxis = d3.svg.axis().scale(y).orient("left");
+
+			var svg = d3.select("body").append("svg")
+				.attr("width", totalWidth + margin.left + margin.right)
+				.attr("height", height + margin.top + margin.bottom)
+				.append("g")
+				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+			svg.append("g")
+				.attr("class", "x axis")
+				.attr("transform", "translate(0," + height + ")")
+				.call(xAxis)
+				.append("text").attr("class", "label")
+				.attr("x", width).attr("y", -6).style("text-anchor", "end")
+				.text("PMC articles")
+			;
+
+			svg.append("g")
+				.attr("class", "y axis")
+				.call(yAxis)
+			;
+
+			corr = [];
+		    for (var i in data.correlations) {
+		    	for (var j in data.correlations[i]) {
+		        	corr.push({
+		        		pmidIndex: j,
+			          	color: i,
+			          	tooltip: algorithms[i] + " (" + data.pmid[j] + ", " + data.correlations[i][j] + ")",
+			          	value: data.correlations[i][j]
+			        });
+		    	}		    
+		    }
+		    var limit = pmids.length * 2;
+		    		    
+			svg.selectAll(".dot")
+				.data(corr).enter()
+				.append("circle")
+				.attr("class", function(datum) {return "dot color" + (+datum.color + 1)})
+				.attr("r", function(datum, index) {
+					if (index < limit) {
+						return 2.5;
+					}
+					return 1;
+				})
+				.attr("cx", function(datum) {
+					return x(datum.pmidIndex);				
+				})
+				.attr("cy", function(datum) {
+					return y(datum.value);
+				})
+			    .on("mouseover", function(datum) {
+			    	d3.select(this).style("opacity", 1);
+		      		tooltip
+			        	.html(datum.tooltip);
+			        	//.style("color", function() {return color(datum.color);})
+					;
+		    	 })
+		    	 .on("mouseout", function() {
+		    	 	d3.select(this).style("opacity", 0.7);
+		      		tooltip.html("");
+		    	 })
+		    ;
+
+			var legend = svg.selectAll(".legend")
+				.data(new Array(20)).enter()
+				.append("g")
+				.attr("class", "legend")
+				.attr("transform", function(d, i) {
+					return "translate(0," + i * 20 + ")";
+				});
+
+			legend.append("rect")
+				.attr("x", totalWidth - gapLegendShape)
+				.attr("width", square)
+				.attr("height", 10)
+				.attr("class", function(d, i) {return "color" + (i+1)})
+			;
+
+			legend.append("text")
+				.attr("x", totalWidth - gapLegendText)
+				.attr("y", 10/2)
+				.attr("dy", ".35em")
+				.style("text-anchor", "end")
+				.text(function(d, i) {
+					return algorithms[i];
+				});
+
+		};
+	</script>
+</head>
+<body>
+	<div style="font-size: 13px">
+		<p>
+		Correlation between our baseline PMRA-stems and other algorithms.
+		<br/><br/>
+		Axis X represents the 4240 articles of our test dataset in alphabetical order. Axis Y represents the correlation value [-1.0, 1.0].
+		<br/>
+		You can select a topic by adding ?topic=&lt;number&gt;, with number between 100 and 149, except 135. For instance <a href="./manhathanCorrelation.html?topic=100">?topic=100</a>
+		<br/>
+		Hovering a circle will show a tooltip on the upper left with information about the algorithm, PMID, and correlation value (might not work).
+		<br/>
+		</p>
+	</div>
+	<div id="topic" class="topic">Topic: all</div>
+	<br/>
+	<div id="tooltip" class="tooltip">The more data, the slower the tooltip</div>
+	<div id="target" style="margin-left: 10px"></div>
+</body>
+</html>
+
